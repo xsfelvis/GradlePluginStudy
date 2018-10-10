@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'com.dslplugin.createdslplugin'
+//apply plugin: 'com.dslplugin.createdslplugin'
+//apply plugin: 'com.dev.complexdsl'
 
 
 apply plugin: 'kotlin-android'
@@ -32,20 +33,20 @@ android {
 }
 
 
-myExtension {
-    extensionName "ddd" //简单属性
-    innerExtension{//对象类型
-        extensionName "innerExtension"
-    }
-    smallExtensions{//命名对象容器
-        extension1{
-            extensionName "11"
-        }
-        extension2{
-            extensionName "22"
-        }
-    }
-}
+//myExtension {
+//    extensionName "ddd" //简单属性
+//    innerExtension{//对象类型
+//        extensionName "innerExtension"
+//    }
+//    smallExtensions{//命名对象容器
+//        extension1{
+//            extensionName "11"
+//        }
+//        extension2{
+//            extensionName "22"
+//        }
+//    }
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
