@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'com.dslplugin.createdslplugin'
+
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: GreetingPlugin
+
+greet {
+    message = "I am dynamic message"
+}
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.example.xsf.gradleplugintest"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+myExtension {
+    extensionName "ddd" //简单属性
+    innerExtension{//对象类型
+        extensionName "innerExtension"
+    }
+    smallExtensions{//命名对象容器
+        extension1{
+            extensionName "11"
+        }
+        extension2{
+            extensionName "22"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+
+
+
+
+class GreetingPluginExtension {
+    String message = "Hello from GreetingPlugin"
+}
+
+class GreetingPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        def extension = project.getExtensions().create('greet', GreetingPluginExtension.class)
+
+        project.task('hello') {
+            doLast {
+                println extension.message
+            }
+        }
+
+
+    }
+}
