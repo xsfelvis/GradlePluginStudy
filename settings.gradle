@@ -1,1 +1,1 @@
-include ':app', ':hellodsl'
+include ':app', ':hellodsl', ':complexscriptdsl'

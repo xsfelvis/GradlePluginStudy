@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+uploadArchives{
+    repositories{
+        flatDir{
+            name "localRepository"
+            dir "localRepository/libs"
+        }
+    }
+}
+
+group "com.dev.complexdsl"
+version "1.0"
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 //apply plugin: 'com.dslplugin.createdslplugin'
-//apply plugin: 'com.dev.complexdsl'
+apply plugin: 'com.dev.complexdsl'
 
 
 apply plugin: 'kotlin-android'
@@ -47,6 +47,27 @@ android {
 //        }
 //    }
 //}
+
+bookManager {
+    libraries{
+        Nanjing{
+            libraryDetail "1111"
+            bookCount 56000
+        }
+    }
+    books {
+        thinkingInJava{
+            bookLocation libraries.Nanjing
+        }
+        JavaScript{
+            bookLocation libraries.Nanjing
+        }
+        Go{
+            bookLocation libraries.Nanjing
+        }
+    }
+}
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
