@@ -9,22 +9,21 @@ buildscript {
             dir "complexscriptdsl/localRepository/libs"
         }
         mavenLocal()
-        google()
         jcenter()
+        google()
     }
     dependencies {
 //        classpath "com.plugintest: hellodsl:1.0.0"
 //        classpath(group:'com.plugintest',name:'hellodsl',version: '1.0.0') {
 //            changing = true
 //        }
-        classpath(group:'com.dev.complexdsl',name:'complexscriptdsl',version: '1.0') {
-            changing = true
-        }
+//        classpath(group:'com.dev.complexdsl',name:'complexscriptdsl',version: '1.0') {
+//            changing = true
+//        }
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.novoda:bintray-release:0.8.0' //jcenter添加
+        classpath 'com.xsfdev:complexcriptdsl:1.0.0'
     }
 }
 
@@ -34,7 +33,25 @@ allprojects {
         google()
         jcenter()
     }
+    tasks.withType(Javadoc) {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
 }
+
+//添加
+ext {
+    userOrg = 'androidxsf' //bintray.com用户名
+    groupId = 'com.xsfdev' //jcenter上的路径
+    publishVersion = '1.0.0' //版本号
+    desc = 'DSL Complex Script Test ' //描述
+    website = 'https://github.com/xsfelvis/GradlePluginStudy' //网站，不重要；尽量模拟github上的地址
+    licences = ['Apache-2.0'] //开源协议
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

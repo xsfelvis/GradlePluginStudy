@@ -1,6 +1,8 @@
 apply plugin: 'java-library'
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'//添加Jcenter
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -21,4 +23,14 @@ version "1.0"
 dependencies {
     compile gradleApi()
     compile localGroovy()
+}
+
+//添加Jcenter
+publish {
+    artifactId = 'complexcriptdsl'//项目名称
+    userOrg = 'androidxsf'//bintray.com用户名
+    groupId = 'com.xsfdev'//jcenter上的路径
+    publishVersion = '1.0.0'//版本号
+    desc = 'DSL complex Script test'//描述，不重要
+    website = 'https://github.com/xsfelvis/GradlePluginStudy'//网站，不重要；尽量模拟github上的地址
 }
