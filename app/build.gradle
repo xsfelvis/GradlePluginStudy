@@ -1,3 +1,5 @@
+import com.android.build.gradle.api.BaseVariant
+
 apply plugin: 'com.android.application'
 
 //apply plugin: 'com.dslplugin.createdslplugin'
@@ -94,7 +96,15 @@ class GreetingPlugin implements Plugin<Project> {
 
         project.task('hello') {
             doLast {
-                println extension.message
+                //println extension.message
+                def variants = (DomainObjectCollection<BaseVariant>) project.android.applicationVariants
+                variants.each {
+                    variant ->
+                        def hello1 = "hello${variant.name.capitalize()}"
+                        def hello2 = "hello${variant.buildType.name.capitalize()}"
+                        println hello1
+//                        println hello2
+                }
             }
         }
 
