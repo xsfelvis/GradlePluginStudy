@@ -5,8 +5,7 @@ buildscript {
     repositories {
         flatDir {
             name 'localRepository'
-            dir "app/localRepository/hellolibs"
-//            dir "complexscriptdsl/localRepository/libs"
+            dir "app/localRepository/libs"
         }
         mavenLocal()
         jcenter()
