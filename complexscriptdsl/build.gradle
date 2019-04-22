@@ -8,14 +8,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-uploadArchives{
-    repositories{
-        flatDir{
-            name "localRepository"
-            dir "localRepository/libs"
-        }
-    }
-}
+//uploadArchives{
+//    repositories{
+//        flatDir{
+//            name "localRepository"
+//            dir "localRepository/libs"
+//        }
+//    }
+//}
 
 group "com.dev.complexdsl"
 version "1.0"

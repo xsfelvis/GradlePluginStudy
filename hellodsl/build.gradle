@@ -13,7 +13,7 @@ uploadArchives {
     repositories {
         flatDir{
             name "localRepository"
-            dir "localRepository/libs"
+            dir "../app/localRepository/hellolibs"
         }
     }
 }

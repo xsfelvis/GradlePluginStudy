@@ -5,8 +5,8 @@ buildscript {
     repositories {
         flatDir {
             name 'localRepository'
-//            dir "hellodsl/localRepository/libs"
-            dir "complexscriptdsl/localRepository/libs"
+            dir "app/localRepository/hellolibs"
+//            dir "complexscriptdsl/localRepository/libs"
         }
         mavenLocal()
         jcenter()
@@ -14,9 +14,9 @@ buildscript {
     }
     dependencies {
 //        classpath "com.plugintest: hellodsl:1.0.0"
-//        classpath(group:'com.plugintest',name:'hellodsl',version: '1.0.0') {
-//            changing = true
-//        }
+        classpath(group:'com.plugintest',name:'hellodsl',version: '1.0.0') {
+            changing = true
+        }
 //        classpath(group:'com.dev.complexdsl',name:'complexscriptdsl',version: '1.0') {
 //            changing = true
 //        }

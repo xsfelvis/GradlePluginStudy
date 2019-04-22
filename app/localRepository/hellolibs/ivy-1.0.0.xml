@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-  <info organisation="com.dslplugin" module="hellodsl" revision="1.0.0" status="integration" publication="20181010135025"/>
+  <info organisation="com.dslplugin" module="hellodsl" revision="1.0.0" status="integration" publication="20190422153626"/>
   <configurations>
     <conf name="apiElements" visibility="private" extends="runtime"/>
     <conf name="archives" visibility="public"/>

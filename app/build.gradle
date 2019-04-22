@@ -4,7 +4,7 @@ import static org.codehaus.groovy.runtime.DefaultGroovyMethods.println
 
 apply plugin: 'com.android.application'
 
-//apply plugin: 'com.dslplugin.createdslplugin'
+apply plugin: 'com.dslplugin.createdslplugin'
 apply plugin: 'com.dev.complexdsl'
 
 
@@ -37,20 +37,20 @@ android {
 }
 
 
-//myExtension {
-//    extensionName "ddd" //简单属性
-//    innerExtension{//对象类型
-//        extensionName "innerExtension"
-//    }
-//    smallExtensions{//命名对象容器
-//        extension1{
-//            extensionName "11"
-//        }
-//        extension2{
-//            extensionName "22"
-//        }
-//    }
-//}
+myExtension {
+    extensionName "ddd" //简单属性
+    innerExtension{//对象类型
+        extensionName "innerExtension"
+    }
+    smallExtensions{//命名对象容器
+        extension1{
+            extensionName "11"
+        }
+        extension2{
+            extensionName "22"
+        }
+    }
+}
 
 bookManager {
     libraries{
