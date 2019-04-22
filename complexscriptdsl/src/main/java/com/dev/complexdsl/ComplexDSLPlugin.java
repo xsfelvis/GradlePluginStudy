@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.println;
+
 /**
  * Created by xsf on 2018/10/10.
  * Description:
@@ -25,6 +27,9 @@ public class ComplexDSLPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        println("------------------开始----------------------");
+        System.out.println("这是我们的自定义插件!");
+        System.out.println("------------------结束----------------------->");
         this.mProject = project;
         mInstantiator = ((DefaultGradle) project.getGradle()).getServices().get(Instantiator.class);
         configExtension();

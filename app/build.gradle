@@ -1,5 +1,7 @@
 import com.android.build.gradle.api.BaseVariant
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.println
+
 apply plugin: 'com.android.application'
 
 //apply plugin: 'com.dslplugin.createdslplugin'
@@ -93,10 +95,10 @@ class GreetingPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         def extension = project.getExtensions().create('greet', GreetingPluginExtension.class)
-
+        System.out.println("------------------helloTask 开始----------------------")
         project.task('hello') {
             doLast {
-                //println extension.message
+                println extension.message
                 def variants = (DomainObjectCollection<BaseVariant>) project.android.applicationVariants
                 variants.each {
                     variant ->
@@ -105,6 +107,7 @@ class GreetingPlugin implements Plugin<Project> {
                         println hello1
 //                        println hello2
                 }
+                System.out.println("------------------helloTask 结束----------------------->")
             }
         }
 
