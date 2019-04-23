@@ -21,8 +21,8 @@ group "com.dev.complexdsl"
 version "1.0"
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
+    implementation gradleApi()
+    implementation localGroovy()
 }
 
 //添加Jcenter

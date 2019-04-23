@@ -27,7 +27,6 @@ public class ComplexDSLPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        println("------------------开始----------------------");
         System.out.println("这是我们的自定义插件!");
         System.out.println("------------------结束----------------------->");
         this.mProject = project;

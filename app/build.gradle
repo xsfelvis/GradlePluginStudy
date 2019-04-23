@@ -14,9 +14,24 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: GreetingPlugin
 
+apply plugin:'com.learntransform.testtransform'
+
+
+se{
+    student{
+        name "maheyusngdgf"
+        phone "1223734634"
+    }
+    myName "seHhsgerg"
+}
+
 greet {
     message = "I am dynamic message"
 }
+
+
+
+
 
 android {
     compileSdkVersion 27
@@ -95,7 +110,7 @@ class GreetingPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         def extension = project.getExtensions().create('greet', GreetingPluginExtension.class)
-        System.out.println("------------------helloTask 开始----------------------")
+        System.out.println("------------------helloTask开始----------------------")
         project.task('hello') {
             doLast {
                 println extension.message
@@ -107,7 +122,7 @@ class GreetingPlugin implements Plugin<Project> {
                         println hello1
 //                        println hello2
                 }
-                System.out.println("------------------helloTask 结束----------------------->")
+//                System.out.println("------------------helloTask 结束----------------------->")
             }
         }
 
