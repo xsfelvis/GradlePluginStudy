@@ -129,3 +129,29 @@ class GreetingPlugin implements Plugin<Project> {
 
     }
 }
+
+task first{
+    doLast{
+        println("first")
+    }
+}
+
+task second{
+    doLast{
+        println("second")
+    }
+}
+
+task third{
+    doLast{
+        println("third")
+    }
+}
+
+task test1(dependsOn:[second,first]){
+    doLast{
+        println("test1 first")
+    }
+}
+
+third.dependsOn(test1)

@@ -1,5 +1,6 @@
 package me.xsfdev.learntransform
 
+import com.android.build.gradle.AppExtension
 import me.xsfdev.learntransform.extension.SExtension
 import me.xsfdev.learntransform.extension.Student
 import org.gradle.api.Plugin
@@ -8,10 +9,10 @@ import org.gradle.api.Project
 /**
  * Description:
  *
- * @author xsf
- * @date 2019-04-23
+ * author xsf
+ * * date 2019-04-23
  */
-class Hotfix implements Plugin<Project> {
+class GetExtension implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.logger.error("======Hello Gradle Plugin =====")
@@ -22,13 +23,18 @@ class Hotfix implements Plugin<Project> {
         project.extensions.create('student', Student)
 
         //定义一个task读取build.gradle中的'se'和'student'的属性
-        project.task('readExtension')<<{
+        project.task('readExtension') << {
             def se = project['se']
             def student = project['student']
             println "The SExtension's myName is " + se.myName
             println "The student's name is  " + student.name
             println "The student's phone is " + student.phone
         }
+
+        //读取android属性
+        //注册Transform
+//        def android = project.extensions.findByType(AppExtension)
+//        android.registerTransform(new PreDex(project))
 
     }
 }
