@@ -14,11 +14,11 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: GreetingPlugin
 
-apply plugin:'com.learntransform.testtransform'
+apply plugin: 'com.learntransform.testtransform'
 
 
-se{
-    student{
+se {
+    student {
         name "maheyusngdgf"
         phone "1223734634"
     }
@@ -28,9 +28,6 @@ se{
 greet {
     message = "I am dynamic message"
 }
-
-
-
 
 
 android {
@@ -54,34 +51,34 @@ android {
 
 myExtension {
     extensionName "ddd" //简单属性
-    innerExtension{//对象类型
+    innerExtension {//对象类型
         extensionName "innerExtension"
     }
-    smallExtensions{//命名对象容器
-        extension1{
+    smallExtensions {//命名对象容器
+        extension1 {
             extensionName "11"
         }
-        extension2{
+        extension2 {
             extensionName "22"
         }
     }
 }
 
 bookManager {
-    libraries{
-        Nanjing{
+    libraries {
+        Nanjing {
             libraryDetail "1111"
             bookCount 56000
         }
     }
     books {
-        thinkingInJava{
+        thinkingInJava {
             bookLocation libraries.Nanjing
         }
-        JavaScript{
+        JavaScript {
             bookLocation libraries.Nanjing
         }
-        Go{
+        Go {
             bookLocation libraries.Nanjing
         }
     }
@@ -96,9 +93,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
-
-
-
 
 
 class GreetingPluginExtension {
@@ -130,28 +124,91 @@ class GreetingPlugin implements Plugin<Project> {
     }
 }
 
-task first{
-    doLast{
-        println("first")
+
+//class SayHelloTask extends DefaultTask {
+//    String msg = "default name"
+//    int age = 20
+//
+//    @TaskAction
+//    void sayHello() {
+//        println "Hello $msg ! Age is ${age}"
+//    }
+//}
+//
+//task test1 doLast {
+//    println "task test1 exec..."
+//}
+//task test2 doLast {
+//    println "task test2 exec..."
+//}
+//task test3 doLast {
+//    println "task test3 exec..."
+//}
+//
+//task hello(type:SayHelloTask,group:"MyGroup")
+//
+////对task进行配置
+//hello.configure {
+//    println "hello task configure"
+//    msg = "test"
+//}
+////获取task的名称
+//println "task name is ${hello.getName()}"
+////获取task的组名
+//println "task group is ${hello.getGroup()}"
+//
+////设置task里的属性值，设置 age = 70
+//hello.setProperty("age", 70)
+////获取task里的某个属性值
+//println "task msg is ${hello.property('msg')}"
+//
+////设置依赖的task，只有test1 task执行完后才会执行hello task
+//hello.dependsOn(test1)
+////设置终结者任务，执行完hello task之后会执行test2 task，通常可以用该方法做一些清理操作
+//hello.finalizedBy(test2)
+//
+////如果同时执行hello、test3这2个task，会确保test3执行完之后才执行hello这个task，用这个来保证执行顺序
+//hello.setMustRunAfter([test3])
+//
+////设置满足某个条件后才执行该task
+//hello.setOnlyIf {
+//    //只有当 age = 70 时，才会执行task，否则不会执行
+//    return hello.property("age") == 70
+//}
+
+task incremental {
+    //设置inputs
+    inputs.property("name", "hjy")
+    inputs.property("age", 20)
+    //设置outputs
+    outputs.file("$buildDir/test.txt")
+
+    doLast {
+        println "exec task IncrementalUpdate"
     }
 }
 
-task second{
-    doLast{
-        println("second")
+class SayHelloTask extends DefaultTask {
+
+    //定义输入
+    @Input
+    String username
+    @Input
+    int age
+
+    //定义输出
+    @OutputDirectory
+    File destDir
+
+    @TaskAction
+    void sayHello() {
+        println "Hello $username ! age is $age"
     }
+
 }
 
-task third{
-    doLast{
-        println("third")
-    }
+task testhello(type: SayHelloTask) {
+    age = 19
+    username = "hjy"
+    destDir = file("$buildDir/test")
 }
-
-task test1(dependsOn:[second,first]){
-    doLast{
-        println("test1 first")
-    }
-}
-
-third.dependsOn(test1)
