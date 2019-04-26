@@ -104,7 +104,7 @@ class GreetingPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         def extension = project.getExtensions().create('greet', GreetingPluginExtension.class)
-        System.out.println("------------------helloTask开始----------------------")
+        System.out.println("------------------GreetingTask开始----------------------")
         project.task('hello') {
             doLast {
                 println extension.message
@@ -113,7 +113,7 @@ class GreetingPlugin implements Plugin<Project> {
                     variant ->
                         def hello1 = "hello${variant.name.capitalize()}"
                         def hello2 = "hello${variant.buildType.name.capitalize()}"
-                        println hello1
+                        System.out.println hello1
 //                        println hello2
                 }
 //                System.out.println("------------------helloTask 结束----------------------->")
@@ -125,57 +125,7 @@ class GreetingPlugin implements Plugin<Project> {
 }
 
 
-//class SayHelloTask extends DefaultTask {
-//    String msg = "default name"
-//    int age = 20
-//
-//    @TaskAction
-//    void sayHello() {
-//        println "Hello $msg ! Age is ${age}"
-//    }
-//}
-//
-//task test1 doLast {
-//    println "task test1 exec..."
-//}
-//task test2 doLast {
-//    println "task test2 exec..."
-//}
-//task test3 doLast {
-//    println "task test3 exec..."
-//}
-//
-//task hello(type:SayHelloTask,group:"MyGroup")
-//
-////对task进行配置
-//hello.configure {
-//    println "hello task configure"
-//    msg = "test"
-//}
-////获取task的名称
-//println "task name is ${hello.getName()}"
-////获取task的组名
-//println "task group is ${hello.getGroup()}"
-//
-////设置task里的属性值，设置 age = 70
-//hello.setProperty("age", 70)
-////获取task里的某个属性值
-//println "task msg is ${hello.property('msg')}"
-//
-////设置依赖的task，只有test1 task执行完后才会执行hello task
-//hello.dependsOn(test1)
-////设置终结者任务，执行完hello task之后会执行test2 task，通常可以用该方法做一些清理操作
-//hello.finalizedBy(test2)
-//
-////如果同时执行hello、test3这2个task，会确保test3执行完之后才执行hello这个task，用这个来保证执行顺序
-//hello.setMustRunAfter([test3])
-//
-////设置满足某个条件后才执行该task
-//hello.setOnlyIf {
-//    //只有当 age = 70 时，才会执行task，否则不会执行
-//    return hello.property("age") == 70
-//}
-
+//测试普通增量更新
 task incremental {
     //设置inputs
     inputs.property("name", "hjy")
@@ -184,10 +134,11 @@ task incremental {
     outputs.file("$buildDir/test.txt")
 
     doLast {
-        println "exec task IncrementalUpdate"
+        System.out.println "exec task IncrementalUpdate"
     }
 }
 
+//测试带注解的增量更新
 class SayHelloTask extends DefaultTask {
 
     //定义输入
@@ -202,7 +153,7 @@ class SayHelloTask extends DefaultTask {
 
     @TaskAction
     void sayHello() {
-        println "Hello $username ! age is $age"
+        System.out.println "Hello $username ! age is $age"
     }
 
 }
@@ -211,4 +162,132 @@ task testhello(type: SayHelloTask) {
     age = 19
     username = "hjy"
     destDir = file("$buildDir/test")
+}
+
+//ExtensionContainer
+//父类
+class Animal {
+
+    String username
+    int legs
+
+    Animal(String name) {
+        username = name
+    }
+
+    void setLegs(int c) {
+        legs = c
+    }
+
+    String toString() {
+        return "This animal is $username, it has ${legs} legs."
+    }
+}
+
+//子类
+class Pig extends Animal {
+
+    int age
+    String owner
+
+    Pig(int age, String owner) {
+        super("Pig")
+        this.age = age
+        this.owner = owner
+    }
+
+    String toString() {
+        return super.toString() + " Its age is $age, its owner is $owner."
+    }
+
+}
+
+//创建的Extension是 暴露出来Animal 类型,创建extension名称是name,该extension的类型是Pig，后面2个是参数
+Animal aAnimal = getExtensions().create(Animal, "animal", Pig, 3, "hjy")
+//创建的Extension是 Pig 类型
+Pig aPig = getExtensions().create("pig", Pig, 5, "kobe")
+
+animal {
+    legs = 4    //配置属性
+}
+
+pig {
+    setLegs 2   //这个是方法调用，也就是 setLegs(2)
+}
+
+task testExt doLast {
+    System.out.println  aAnimal
+    System.out.println aPig
+    //验证 aPig 对象是 ExtensionAware 类型的
+    System.out.println "aPig is a instance of ExtensionAware : ${aPig instanceof ExtensionAware}"
+}
+
+//嵌套Extension
+
+class OuterExt {
+
+    String outerName
+    String msg
+    InnerExt innerExt = new InnerExt()
+
+    void outerName(String name) {
+        outerName = name
+    }
+
+    void msg(String msg) {
+        this.msg = msg
+    }
+
+    //创建内部Extension，名称为方法名 inner
+    void inner(Action<InnerExt> action) {
+        action.execute(inner)
+    }
+
+    //创建内部Extension，名称为方法名 inner
+    void inner(Closure c) {
+        org.gradle.util.ConfigureUtil.configure(c, innerExt)
+    }
+
+    String toString() {
+        return "OuterExt[ name = ${outerName}, msg = ${msg}] " + innerExt
+    }
+
+}
+
+
+class InnerExt {
+
+    String innerName
+    String msg
+
+    void innerName(String name) {
+        innerName = name
+    }
+
+    void msg(String msg) {
+        this.msg = msg
+    }
+
+    String toString() {
+        return "InnerExt[ name = ${innerName}, msg = ${msg}]"
+    }
+
+}
+
+def outExt = getExtensions().create("outer", OuterExt)
+
+outer {
+
+    outerName "outer"
+    msg "this is a outer message."
+
+    inner {
+        innerName "inner"
+        msg "This is a inner message."
+    }
+
+}
+
+task testNestExt doLast {
+    System.out.println outExt
 }
