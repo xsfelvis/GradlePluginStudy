@@ -155,7 +155,6 @@ class SayHelloTask extends DefaultTask {
     void sayHello() {
         System.out.println "Hello $username ! age is $age"
     }
-
 }
 
 task testhello(type: SayHelloTask) {
@@ -216,7 +215,7 @@ pig {
 }
 
 task testExt doLast {
-    System.out.println  aAnimal
+    System.out.println aAnimal
     System.out.println aPig
     //验证 aPig 对象是 ExtensionAware 类型的
     System.out.println "aPig is a instance of ExtensionAware : ${aPig instanceof ExtensionAware}"
@@ -290,4 +289,74 @@ outer {
 
 task testNestExt doLast {
     System.out.println outExt
+}
+
+//通过NamedDomainObjectContainer 创建嵌套 extension
+
+//这是领域对象类型定义
+class TestDomainObj {
+
+    //必须定义一个 name 属性，并且这个属性值初始化以后不要修改
+    String name
+
+    String msg
+
+    //构造函数必须有一个 name 参数
+    TestDomainObj(String name) {
+        this.name = name
+    }
+
+    void msg(String msg) {
+        this.msg = msg
+    }
+
+    String toString() {
+        return "name = ${name}, msg = ${msg}"
+    }
+}
+
+//创建一个扩展
+class TestNamedDomainObjectContainerExtension {
+    //定义一个NamedDomainObjectContainer属性
+    NamedDomainObjectContainer<TestDomainObj> testDomains
+
+    TestNamedDomainObjectContainerExtension(Project project) {
+        //通过 project.container(...) 方法创建 NamedDomainObjectContainer
+        NamedDomainObjectContainer<TestDomainObj> domainObjs = project.container(TestDomainObj)
+        testDomains = domainObjs
+    }
+
+    //让其支持Gradle DSL语法
+    void testDomain(Action<NamedDomainObjectContainer<TestDomainObj>> action) {
+        action.execute(testDomains)
+    }
+
+    void test() {
+        //遍历命名领域对象容器，打印出所有的领域对象值
+        testDomains.all {
+            data ->
+                System.out.println data
+        }
+    }
+
+}
+
+//创建一个名为testNamedDomainObjectContainer的Extension
+def testNamedDomainObjectContainerExTension = getExtensions().create("testNamedDomainObjectContainer", TestNamedDomainObjectContainerExtension, project)
+
+testNamedDomainObjectContainer {
+    testDomain {
+        domain2 {
+            msg "This is domain2"
+        }
+        domain1 {
+            msg "This is domain1"
+        }
+        domain3 {
+            msg "This is domain3"
+        }
+    }
+}
+task NamedDomainObjectContainerTask doLast {
+    testNamedDomainObjectContainerExTension.test()
 }
