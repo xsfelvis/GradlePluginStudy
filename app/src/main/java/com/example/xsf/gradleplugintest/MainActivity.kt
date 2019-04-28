@@ -14,11 +14,15 @@ class MainActivity : Activity(), OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvClick = finc
-
+        tvClick = findViewById(R.id.tvClick)
+        tvClick.setOnClickListener(this)
     }
 
-    override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.tvClick -> {
+
+            }
+        }
     }
 }

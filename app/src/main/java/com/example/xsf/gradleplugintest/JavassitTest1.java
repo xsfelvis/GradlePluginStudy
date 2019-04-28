@@ -12,7 +12,7 @@ import javassist.CtConstructor;
 import javassist.CtField;
 import javassist.CtMethod;
 
-public class Example1 {
+public class JavassitTest1 {
     public static void main(String[] args) throws Exception {
         ClassPool pool = ClassPool.getDefault();
         CtClass cc = pool.makeClass("bean.User");
@@ -38,6 +38,6 @@ public class Example1 {
         cons.setBody("{}");
         cc.addConstructor(cons);
 
-        cc.writeFile("E:/workspace/TestCompiler/src");
+        cc.writeFile("./com/example/xsf/gradleplugintest");
     }
 }

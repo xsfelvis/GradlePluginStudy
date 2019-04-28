@@ -18,7 +18,7 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.Modifier;
 
-public class Example2 {
+public class JavassitTest2 {
     //获取类的简单信息
     public static void test01() throws Exception{
         ClassPool pool = ClassPool.getDefault();
