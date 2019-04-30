@@ -16,7 +16,7 @@ import org.gradle.api.Project
  * author xsf
  * * date 2019-04-23
  */
-class GetExtension implements Plugin<Project> {
+class GetExtensionPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.logger.error("======Hello Gradle Plugin =====")

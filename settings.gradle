@@ -1,1 +1,4 @@
-include ':app', ':hellodsl', ':complexscriptdsl', ':learntransform'
+include ':app'
+//include ':hellodsl'
+//include ':complexscriptdsl'
+include ':learntransform'
