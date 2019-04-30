@@ -17,13 +17,13 @@ apply plugin: GreetingPlugin
 apply plugin: 'com.learntransform.testtransform'
 
 
-se {
-    student {
-        name "maheyusngdgf"
-        phone "1223734634"
-    }
-    myName "seHhsgerg"
-}
+//se {
+//    student {
+//        name "maheyusngdgf"
+//        phone "1223734634"
+//    }
+//    myName "seHhsgerg"
+//}
 
 greet {
     message = "I am dynamic message"
